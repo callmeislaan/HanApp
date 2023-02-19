@@ -1,0 +1,11 @@
+.Content {
+    padding-top: 20px;
+    line-height: 1.5;
+}
+
+.KeyContent:hover {
+    background-color: #f3d2ed;
+    border-radius: 5px;
+    padding: 2px;
+    font-weight: bold;
+}

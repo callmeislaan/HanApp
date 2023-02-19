@@ -1,0 +1,29 @@
+.Insert {
+    background-color: cadetblue;
+    width: 500px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.Insert textarea {
+    width: 100%;
+    height: 200px;
+    resize: none;
+    padding: 10px;
+    font-size: larger;
+}
+
+.Insert button {
+    margin-top: 20px;
+    border: none;
+}
+
+.Insert button:last-child {
+    float: right;
+}
+
+.Selection {
+    font-size: large;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
