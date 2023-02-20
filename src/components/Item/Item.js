@@ -9,7 +9,7 @@ export default function Item(props) {
     return (
         <>
             <li className="Item" color={item_background_color}>
-                <button className="ItemName" onClick={props.onItemClick({item_id})}>{item_name}</button>
+                <button className="ItemName" onClick={() => props.clicked(item_id)}>{item_name}</button>
             </li>
         </>
     );

@@ -10,7 +10,7 @@ export default function FolderSet(props) {
     return (
         <>
             <SetHeader header={header} button_title={button_title} />
-            <ItemGroup item_list={data} />
+            <ItemGroup item_list={data} {...props}/>
         </>
     );
 }

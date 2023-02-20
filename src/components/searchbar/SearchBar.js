@@ -7,7 +7,7 @@ export default function SearchBar(props) {
     return (
         <div className="SearchBar">
             <Search />
-            <Button button_title={button_title} />
+            <Button button_title={button_title} {...props} />
         </div>
     );
 }

@@ -8,7 +8,7 @@ export default function ItemGroup(props) {
     let item_group = [];
 
     item_list.forEach(item => {
-        item_group.push(<Item key={item.id} item={item} props={...props}/>);
+        item_group.push(<Item key={item.id} item={item} {...props}/>);
     });
 
     return (

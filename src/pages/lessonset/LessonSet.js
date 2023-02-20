@@ -9,8 +9,8 @@ export default function LessonSet(props) {
 
     return (
         <>
-            <SetHeader header={header} button_title={button_title} />
-            <ItemGroup item_list={data} />
+            <SetHeader header={header} button_title={button_title} {...props}/>
+            <ItemGroup item_list={data} {...props} />
         </>
     );
 }
