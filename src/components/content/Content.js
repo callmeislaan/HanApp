@@ -8,18 +8,14 @@ import Button from '../button/Button'
 
 export default function Content(props) {
 
-    const [content, setContent] = useState(props.content);
+    const [content, setContent] = useState("");
     const [popup, setPopup] = useState(false);
     const [selection, setSelection] = useState("");
 
-    let map_value = [
-        { key: "code below", value: "and this is value" },
-        { key: "tooltip", value: "and this is value" },
-        { key: "ti", value: "and this is value" },
-    ]
+    let map_value = props.keyValues;
 
     useEffect(() => {
-        setContent(wordsHoverAssigned(content, map_value));
+        setContent(wordsHoverAssigned(props.content, map_value));
     }, []);
 
     const onCancelHanlder = () => {
@@ -68,7 +64,7 @@ export default function Content(props) {
 function wordsHoverAssigned(content, map_value) {
     let index = 0;
     map_value.forEach(element => {
-        let key = element.key;
+        let key = element.transKey.trim();
         let pattern = " " + key + " ";
         let replaced = (keyindex) => <span key={keyindex} className="KeyContent">{pattern}</span>;
         content = reactStringReplace(content, pattern, (i) => replaced(key + i + index++));
