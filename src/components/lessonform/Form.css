@@ -1,0 +1,42 @@
+.Form {
+    background-color: #14738d;
+    width: 1000px;
+    height: 95dvh;
+    border-radius: 15px;
+    text-align: center;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Form .Input, .ButtonGroup, .Textare {
+    width: 100%;
+    margin: 10px auto;
+}
+
+.Form .Textare {
+    height: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    resize: none;
+}
+
+.Form .ButtonGroup {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Form .ButtonGroup .Submit, .Cancel {
+    width: 30%;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px auto;
+}
+
+.Form .ButtonGroup .Submit:hover, .Cancel:hover {
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}

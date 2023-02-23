@@ -3,14 +3,18 @@ import ItemGroup from "../../components/itemgroup/ItemGroup";
 import axios from "axios";
 import { setCurrentFolder } from "./FolderSlice"
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
+import Popup from "reactjs-popup";
+import Form from "../../components/Form/Form";
 
 export default function FolderSet() {
 
     const [folders, setFolders] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [popup, setPopup] = useState(false);
+    const formRef = useRef(null);
 
     let header = "Han's bookmark";
     let button_title = "New folder";
@@ -30,10 +34,46 @@ export default function FolderSet() {
         console.log("folder Id: " + folderId);
     }
 
+    const handlerNewFolderClick = () => {
+        setPopup(true);
+    }
+
+    const handlerCancel = (event) => {
+        setPopup(false);
+    }
+
+    const handlerSubmit = (event) => {
+
+        let name = formRef.current.name.value;
+
+        let inputRef = {
+            "name": name
+        };
+
+        axios.post("http://localhost:8080/api/folders", inputRef)
+            .then((res) => {
+                window.location.reload(true);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        event.preventDefault();
+        setPopup(false);
+    }
+
+    const PopupShow = () => {
+        return (
+            <Popup open={popup} closeOnDocumentClick={false} closeOnEscape={false}>
+                <Form title="Create new folder" handlerCancel={handlerCancel} handlerSubmit={handlerSubmit} formRef={formRef}/>
+            </Popup>
+        );
+    };
+
     return (
         <>
-            <SetHeader header={header} button_title={button_title} />
-            <ItemGroup item_list={folders} clicked={handlerFolderClick}/>
+            <PopupShow />
+            <SetHeader header={header} button_title={button_title} clicked={handlerNewFolderClick} />
+            <ItemGroup item_list={folders} clicked={handlerFolderClick} />
         </>
     );
 }

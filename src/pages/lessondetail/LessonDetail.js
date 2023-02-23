@@ -27,7 +27,7 @@ export default function LessonDetail() {
             {data ?
                 <>
                     <Header header={data.name} />
-                    <Content content={data.content} keyValues={data.keyValues} />
+                    <Content content={data.content} keyValues={data.keyValues} lessonId={data.id} />
                 </> 
                 : <Loading />}
         </div>
