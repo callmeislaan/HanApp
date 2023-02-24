@@ -11,6 +11,7 @@ function App() {
       <header className='App-header'>
         <BrowserRouter>
           <Routes>
+            <Route path='/' element={<FolderSet/>}/>
             <Route path="folders" element={<Outlet/>}>
               <Route index element={<FolderSet />}/>
               <Route path=":folderId/lessons" element={<Outlet />} >

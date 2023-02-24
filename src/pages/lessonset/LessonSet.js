@@ -15,6 +15,7 @@ export default function LessonSet() {
     const [popup, setPopup] = useState(false);
     const [inputs, setInputs] = useState({"folderId": params.folderId});
     const formRef = useRef(null);
+    const editorRef = useRef(null);
 
     useEffect(() => {
         axios.get("http://localhost:8080/api/folders/" + params.folderId + "/lessons")
@@ -47,7 +48,8 @@ export default function LessonSet() {
 
     const handlerSubmit = (event) => {
         let name = formRef.current.name.value;
-        let content = formRef.current.content.value;
+        // let content = formRef.current.content.value;
+        let content = editorRef.current.getContent();
 
         let inputRef = {
             "folderId": params.folderId,
@@ -80,7 +82,7 @@ export default function LessonSet() {
         return (
             <Popup open={popup} closeOnDocumentClick={false} closeOnEscape={false}>
                 <Form title="Create new lesson" handlerCancel={handlerCancel} handlerSubmit={handlerSubmit} handlerChange={handlerChange} inputs={inputs}
-                formRef={formRef}/>
+                formRef={formRef} editorRef={editorRef}/>
             </Popup>
         );
     };

@@ -6,6 +6,9 @@ import reactStringReplace from 'react-string-replace';
 import Popup from 'reactjs-popup';
 import Button from '../button/Button'
 import axios from 'axios';
+import parse from 'html-react-parser';
+import jsxToString from 'jsx-to-string';
+import ReactDOMServer from 'react-dom/server';
 
 export default function Content(props) {
 
@@ -102,6 +105,8 @@ export default function Content(props) {
     return (
         <div className="Content" onContextMenu={onKeyDownHandler}>
             <PopupShow />
+            {/* {console.log(content)}
+            <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
             {content}
         </div>
     );
@@ -111,23 +116,26 @@ export default function Content(props) {
 
 function wordsHoverAssigned(content, map_value, handlerOnDoubleClick) {
     let index = 0;
-    content = " " + content + " ";
     map_value.forEach(element => {
         let key = element.transKey.trim();
-        let pattern = " " + key + " ";
-        let replacePattern = " " + key + " ";
+        let pattern = key;
+        let replacePattern = key;
         let value = element.transValue.trim();
-        let replaced = (keyindex) => <>
-            {' '}
-            <span key={keyindex} onDoubleClick={() => handlerOnDoubleClick({ key })}  className="KeyContent tooltip">
-                {replacePattern}
-                <span className='tooltiptext'>{value}</span>
-            </span>
-            {' '}
-        </>
+
+        let replaced = (keyindex) =>
+            <>
+                {console.log("replaced")}
+                <span key={keyindex} onDoubleClick={() => handlerOnDoubleClick({ key })} className="KeyContent tooltip">
+                    {replacePattern}
+                    <span className='tooltiptext'>{value}</span>
+                </span>
+            </>
+
         content = reactStringReplace(content, pattern, (i) => replaced(key + i + index++));
     });
-    return content;
+    return parse(content, {
+        replace: content
+    });
 }
 
 
