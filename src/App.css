@@ -30,6 +30,7 @@ ul {
   text-align: center;
   border-radius: 6px;
   padding: 5px;
+  width: auto;
 
   /* Position the tooltip */
   position: absolute;
@@ -43,6 +44,7 @@ ul {
 }
 
 .tooltip:hover {
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
+  color: red;
   cursor: pointer;
 }

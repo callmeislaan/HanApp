@@ -6,9 +6,11 @@ import reactStringReplace from 'react-string-replace';
 import Popup from 'reactjs-popup';
 import Button from '../button/Button'
 import axios from 'axios';
-import parse from 'html-react-parser';
+import parse, { domToReact } from 'html-react-parser';
 import jsxToString from 'jsx-to-string';
 import ReactDOMServer from 'react-dom/server';
+import reactElementToJSXString from 'react-element-to-jsx-string';
+import { compose } from '@reduxjs/toolkit';
 
 export default function Content(props) {
 
@@ -19,16 +21,53 @@ export default function Content(props) {
 
     let map_value = props.keyValues;
 
+    useEffect(() => {
+        setContent(wordsHoverAssigned(props.content, map_value));
+    }, []);
 
     const handlerOnDoubleClick = (data) => {
-        console.log(data);
-        setSelection(data.key);
+        setSelection(data.trim());
         setPopup(true);
     }
 
-    useEffect(() => {
-        setContent(wordsHoverAssigned(props.content, map_value, handlerOnDoubleClick));
-    }, []);
+    const wordsHoverAssigned = (content) => {
+        let localContent = content;
+        let index = 0;
+        map_value.forEach(element => {
+            let key = element.transKey.trim();
+            let pattern = key;
+            let replacePattern = key;
+            let value = element.transValue.trim();
+            let replaced = (keyindex) => {
+                let repleacedValue =
+                    <span key={keyindex} id="replace" repleacepattern={replacePattern} value={value} clickkey={key}>
+                        {replacePattern}
+                    </span>
+                return reactElementToJSXString(repleacedValue);
+            }
+
+            localContent = reactStringReplace(localContent, pattern, (i) => replaced(key + i + index++));
+        });
+
+        const options = {
+            replace: ({ attribs }) => {
+                if (attribs && attribs.id === 'replace') {
+                    console.log(attribs);
+                    return <>
+                        <span key={attribs.key} className="KeyContent tooltip" onClick={() => handlerOnDoubleClick(attribs.clickkey)}>
+                            {console.log(attribs.repleacepattern)}
+                            {attribs.repleacepattern}
+                            <span className='tooltiptext'>{attribs.value}</span>
+                        </span>
+                    </>
+                }
+            }
+        }
+        if (typeof localContent === 'string') {
+            return parse(localContent, options);
+        }
+        return parse(localContent.join(""), options);
+    }
 
     const onCancelHanlder = () => {
         setSelection("");
@@ -96,7 +135,7 @@ export default function Content(props) {
         event.preventDefault();
         let selected = getSelectionText();
         if (selected != "") {
-            setSelection(selected);
+            setSelection(selected.trim());
             setPopup(true);
         }
 
@@ -105,37 +144,9 @@ export default function Content(props) {
     return (
         <div className="Content" onContextMenu={onKeyDownHandler}>
             <PopupShow />
-            {/* {console.log(content)}
-            <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
             {content}
         </div>
     );
-}
-
-
-
-function wordsHoverAssigned(content, map_value, handlerOnDoubleClick) {
-    let index = 0;
-    map_value.forEach(element => {
-        let key = element.transKey.trim();
-        let pattern = key;
-        let replacePattern = key;
-        let value = element.transValue.trim();
-
-        let replaced = (keyindex) =>
-            <>
-                {console.log("replaced")}
-                <span key={keyindex} onDoubleClick={() => handlerOnDoubleClick({ key })} className="KeyContent tooltip">
-                    {replacePattern}
-                    <span className='tooltiptext'>{value}</span>
-                </span>
-            </>
-
-        content = reactStringReplace(content, pattern, (i) => replaced(key + i + index++));
-    });
-    return parse(content, {
-        replace: content
-    });
 }
 
 
@@ -146,5 +157,5 @@ function getSelectionText() {
     } else if (document.selection && document.selection.type != "Control") {
         text = document.selection.createRange().text;
     }
-    return text;
+    return text.trim();
 }
