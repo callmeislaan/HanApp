@@ -10,5 +10,5 @@ services:
 
 networks:
   hanapp_network:
-    - name: hanapp_network
-    - externer: true
+    name: hanapp_network
+    externer: true
