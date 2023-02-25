@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  hanappfe:
+    build: .
+    volumes:
+      - ./node_modules:./node_modules
+    networks:
+      - hanapp_network
+
+networks:
+  hanapp_network:
+    - name: hanapp_network
+    - externer: true
