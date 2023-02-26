@@ -18,7 +18,7 @@ export default function LessonSet() {
     const editorRef = useRef(null);
 
     useEffect(() => {
-        axios.get("http://hanappapp:8080/api/folders/" + params.folderId + "/lessons")
+        axios.get("http://localhost:8080/api/folders/" + params.folderId + "/lessons")
         .then((res) => {
             let data = res.data;
             setFolderLessons(data);
@@ -57,7 +57,7 @@ export default function LessonSet() {
             "content": content
         };
 
-        axios.post("http://hanappapp:8080/api/lessons", inputRef)
+        axios.post("http://localhost:8080/api/lessons", inputRef)
             .then((res) => {
                 window.location.reload(true);
             })

@@ -15,7 +15,7 @@ export default function LessonDetail() {
     let { folderId, lessonId } = params;
 
     useEffect(() => {
-        axios.get("http://hanappapp:8080/api/lessons/" + lessonId)
+        axios.get("http://localhost:8080/api/lessons/" + lessonId)
             .then((res) => {
                 let data = res.data;
                 setData(data);
