@@ -20,7 +20,7 @@ export default function FolderSet() {
     let button_title = "New folder";
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/folders")
+        axios.get("http://34.143.219.221:8080/api/folders")
             .then((res) => {
                 let data = res.data;
                 setFolders(data);
@@ -50,7 +50,7 @@ export default function FolderSet() {
             "name": name
         };
 
-        axios.post("http://localhost:8080/api/folders", inputRef)
+        axios.post("http://34.143.219.221:8080/api/folders", inputRef)
             .then((res) => {
                 window.location.reload(true);
             })

@@ -82,7 +82,7 @@ export default function Content(props) {
             "transValue": formRef.current.transValue.value.trim()
         };
 
-        axios.post("http://localhost:8080/api/lesson-key-value", inputRef)
+        axios.post("http://34.143.219.221:8080/api/lesson-key-value", inputRef)
             .then((res) => {
                 window.location.reload(true);
             })
@@ -97,7 +97,7 @@ export default function Content(props) {
     }
 
     const onDeleteHandler = (event) => {
-        let httpUri = "http://localhost:8080/api/lessons/" + props.lessonId + "/key?key=" + selection;
+        let httpUri = "http://34.143.219.221:8080/api/lessons/" + props.lessonId + "/key?key=" + selection;
         axios.delete(httpUri)
             .then((res) => {
                 window.location.reload(true);
